@@ -1,13 +1,22 @@
 app_name = "nl_attendance_timesheet"
 app_title = "Attendance and Timesheet"
 app_publisher = "Navari Ltd"
-app_description = "FrappeHR app to automate creation of employee timesheets from attendance records"
+app_description = (
+    "FrappeHR app to automate creation of employee timesheets from attendance records"
+)
 app_email = "support@navari.co.ke"
 app_license = "GNU Affero General Public License v3.0"
 required_apps = ["frappe/erpnext"]
 
 # Includes in <head>
 # ------------------
+
+fixtures = [
+    {
+        "doctype": "Custom Field",
+        "filters": [["name", "in", ("Attendance-custom_calculate_working_hours")]],
+    }
+]
 
 # include js, css files in header of desk.html
 # app_include_css = "/assets/nl_attendance_timesheet/css/nl_attendance_timesheet.css"
@@ -29,7 +38,8 @@ required_apps = ["frappe/erpnext"]
 
 # include js in doctype views
 doctype_js = {
- "Payroll Entry" : "public/js/payroll_entry.js",}
+    "Payroll Entry": "public/js/payroll_entry.js",
+}
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
@@ -118,13 +128,11 @@ doctype_js = {
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-# 	}
-# }
+doc_events = {
+    "Attendance": {
+        "before_submit": "nl_attendance_timesheet.overrides.calculate_working_hours.calculate_working_hours",
+    },
+}
 
 # Scheduled Tasks
 # ---------------

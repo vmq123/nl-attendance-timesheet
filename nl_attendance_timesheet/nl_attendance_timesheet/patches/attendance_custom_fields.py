@@ -6,6 +6,7 @@ def execute():
     custom_fields = {
         "Attendance": [
             {
+                "label": "Overtime",
                 "fieldname": "overtime",
                 "fieldtype": "Float",
                 "translatable": 1,
