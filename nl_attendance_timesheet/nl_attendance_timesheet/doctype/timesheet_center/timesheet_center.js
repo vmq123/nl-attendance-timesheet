@@ -17,6 +17,7 @@ function generate_timesheets(frm) {
         args: {
             start_date: frm.doc.start_date,
             end_date: frm.doc.end_date,
+            company: frm.doc.company
         },
     });
 }

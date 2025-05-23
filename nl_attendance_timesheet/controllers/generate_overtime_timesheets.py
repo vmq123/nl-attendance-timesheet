@@ -8,12 +8,11 @@ current_date = nowdate()
 
 
 @frappe.whitelist()
-def generate_overtime_timesheets(start_date=current_date, end_date=current_date):
+def generate_overtime_timesheets(start_date=current_date, end_date=current_date, company=None):
     SETTINGS_DOCTYPE = "Navari Custom Payroll Settings"
     overtime_15 = frappe.db.get_single_value(SETTINGS_DOCTYPE, "overtime_15_activity")
     overtime_20 = frappe.db.get_single_value(SETTINGS_DOCTYPE, "overtime_20_activity")
-    company = frappe.db.get_single_value(SETTINGS_DOCTYPE, "company")
-
+    
     if not overtime_15 or not overtime_20:
         frappe.throw(
             "Please set up both Overtime 1.5 and Overtime 2.0 activities in Navari Custom Payroll Settings"
