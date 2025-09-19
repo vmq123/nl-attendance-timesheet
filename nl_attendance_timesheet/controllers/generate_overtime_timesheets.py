@@ -9,13 +9,13 @@ from erpnext.setup.doctype.employee.employee import get_holiday_list_for_employe
 from hrms.utils.holiday_list import get_holiday_dates_between
 
 current_date = nowdate()
-
+logger = frappe.logger("mk_logger")
 # cache keys
 HOLIDAYS_BETWEEN_DATES = "holidays_between_dates"
 
 @frappe.whitelist()
 def generate_overtime_timesheets(start_date=current_date, end_date=current_date):
-    print(f"start_date: {start_date} end_date: {end_date}")
+    logger.info(f"start_date: {start_date} end_date: {end_date}")
 
     SETTINGS_DOCTYPE = 'Navari Custom Payroll Settings'
     overtime_15 = frappe.db.get_single_value(SETTINGS_DOCTYPE, 'overtime_15_activity')
@@ -59,7 +59,7 @@ def generate_overtime_timesheets(start_date=current_date, end_date=current_date)
 
     for entry in attendance_records:
         holiday_dates = get_holidays_for_employee(entry.employee, start_date, end_date)
-        print(f"holiday_dates: {holiday_dates}")
+        logger.info(f"holiday_dates: {holiday_dates}")
         # if entry.get('holiday_list'):
         if holiday_dates:
             # holiday_dates = frappe.db.get_all('Holiday', filters={'parent': entry.holiday_list}, pluck='holiday_date')

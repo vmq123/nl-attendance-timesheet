@@ -6,6 +6,8 @@ from ..controllers.get_employee_attendance import get_employee_attendance, get_e
 from ..controllers.generate_overtime_timesheets import generate_overtime_timesheets
 from pypika import Criterion
 
+frappe.utils.logger.set_log_level("INFO")
+logger = frappe.logger("mk_logger")
 
 def execute():
     start_date = "2025-04-01"
@@ -14,12 +16,12 @@ def execute():
     process_attendance_after = start_date
     last_sync_of_checkin = end_date + " 23:59:00"
 
-    # check_add_hour()
+    check_add_hour()
     # process_attendance(process_attendance_after,last_sync_of_checkin)
     # generate_overtime_timesheets(start_date,end_date)
     
     # add_attendance_data("HR-PRUN-2025-00017")
-    add_incentive_data("HR-PRUN-2025-00017")
+    # add_incentive_data("HR-PRUN-2025-00017")
     # calculate_salary_slip("Sal Slip/HR-EMP-00005/00007")
 
 def calculate_salary_slip(name):
@@ -32,7 +34,7 @@ def add_incentive_data(payroll_entry):
     # doc = frappe.get_doc("Payroll Entry", payroll_entry)
 
     salary_slips = frappe.db.get_all('Salary Slip', filters = { 'payroll_entry': payroll_entry, 'docstatus': 0 })
-    print(f"salary_slips: {salary_slips}")
+    logger.info(f"salary_slips: {salary_slips}")
     for entry in salary_slips:
         salary_slip = frappe.get_doc('Salary Slip', entry.get('name'))
         start_date, end_date=salary_slip.start_date, salary_slip.end_date
@@ -65,7 +67,7 @@ def add_incentive_data(payroll_entry):
         incentives_total = 0
 
         for entry in incentive_records:
-            print(f"entry: {entry}")
+            logger.info(f"entry: {entry}")
             salary_slip.append('incentive', {
                 'sales_order': entry.get('parent'),
                 'allocated_percentage': entry.get('allocated_percentage'),
@@ -94,7 +96,7 @@ def process_attendance(process_attendance_after,last_sync_of_checkin):
             ignore_permissions=True, # ignore write permissions during insert
             ignore_version=True # do not create a version record
         )
-        print(f"Shift_type: {doc}")
+        logger.info(f"Shift_type: {doc}")
         doc.process_auto_attendance()
     
 def add_attendance_data(payroll_entry):
@@ -105,13 +107,13 @@ def add_attendance_data(payroll_entry):
     overtime_20 = frappe.db.get_single_value(SETTINGS_DOCTYPE, 'overtime_20_activity')
 
     salary_slips = frappe.db.get_all('Salary Slip', filters = { 'payroll_entry': payroll_entry, 'docstatus': 0 })
-    print(f"salary_slips: {salary_slips}")
+    logger.info(f"salary_slips: {salary_slips}")
 
     for entry in salary_slips:
         salary_slip = frappe.get_doc('Salary Slip', entry.get('name'))
         # TODO: get real duration from shift_type instead of 8
         maximum_monthly_hours = salary_slip.total_working_days * 8
-        print(f"maximum_monthly_hours: {maximum_monthly_hours}")
+        logger.info(f"maximum_monthly_hours: {maximum_monthly_hours}")
         salary_slip.attendance = []
         salary_slip.regular_overtime = []
         salary_slip.holiday_overtime = []
@@ -131,7 +133,7 @@ def add_attendance_data(payroll_entry):
 
         if attendance:
             for attendance_entry in attendance:
-                print(f"attendance_entry: {attendance_entry}")
+                logger.info(f"attendance_entry: {attendance_entry}")
                 if attendance_entry.get('attendance_date') not in (holiday_dates or []) and attendance_entry.get('working_hours') > 0:
                     billiable_hours = 0
 
@@ -157,7 +159,7 @@ def add_attendance_data(payroll_entry):
 
         if overtime_attendance:
             for overtime_attendance_record in overtime_attendance:
-                print(f"overtime_attendance_record: {overtime_attendance_record}")
+                logger.info(f"overtime_attendance_record: {overtime_attendance_record}")
                 if overtime_attendance_record.get('activity_type') == overtime_15:
                     salary_slip.append('regular_overtime', {
                         'timesheet': overtime_attendance_record.get('name'),
@@ -200,4 +202,5 @@ def check_add_hour():
     shift_end_time_date_time = in_time + timedelta(hours=shift_type_doc.total_shift_hours)
     shift_end_time = shift_end_time_date_time.time()
 
-    print(f"in_time: {in_time} shift_end_time_date_time: {shift_end_time_date_time} shift_end_time:{shift_end_time}")
+    # print(f"in_time: {in_time} shift_end_time_date_time: {shift_end_time_date_time} shift_end_time:{shift_end_time}")
+    logger.info(f"in_time: {in_time} shift_end_time_date_time: {shift_end_time_date_time} shift_end_time:{shift_end_time}")
