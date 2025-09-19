@@ -6,11 +6,18 @@ def execute():
     custom_fields = {
         "Shift Type": [
             {
+                "fieldname": "total_shift_hours",
+                "fieldtype": "Float",
+                "label": "Total shift hours",
+                "translatable": 1,
+                "insert_after": "end_time"
+            },
+            {
                 "fieldname": "include_unpaid_breaks",
                 "fieldtype": "Check",
                 "label": "Include Unpaid Breaks",
                 "translatable": 1,
-                "insert_after": "end_time"
+                "insert_after": "total_shift_hours"
             },
             {
                 "fieldname": "unpaid_breaks_minutes",
@@ -27,6 +34,13 @@ def execute():
                 "translatable": 1,
                 "depends_on": "eval: doc.include_unpaid_breaks",
                 "insert_after": "unpaid_breaks_minutes"
+            },
+            {
+                "fieldname": "total_shift_hours",
+                "fieldtype": "Float",
+                "label": "Total shift hours",
+                "translatable": 1,
+                "insert_after": "min_hours_to_include_a_break"
             }
         ]
     }

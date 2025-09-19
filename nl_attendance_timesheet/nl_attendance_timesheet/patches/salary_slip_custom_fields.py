@@ -106,9 +106,55 @@ def execute():
                 "fieldtype": "Currency",
                 "label": "Hourly Rate",
                 "translatable": 1,
-                "fetch_from": "salary_structure.hour_rate",
+                "fetch_from": "salary_structure.hourly_rate",
                 "insert_after": "navari_vf_cb_ss_01"
-            }
+            },
+            {
+                "fieldname": "incentive_based_salary",
+                "fieldtype": "Check",
+                "label": "Incentive based salary",
+                "translatable": 1,
+                "read_only": 1,
+                "fetch_from": "salary_structure.incentive_based_salary",
+                "insert_after": "wage_based_salary_hours"
+            },
+            {
+                "fieldname": "incentives_details_tab_break",
+                "fieldtype": "Tab Break",
+                "label": "Incentives Details",
+                "translatable": 1,
+                "insert_after": "hourly_rate"
+            },
+            {
+                "fieldname": "incentives_section",
+                "fieldtype": "Section Break",
+                "insert_after": "incentives_details_tab_break",
+                "label": "Incentive",
+                "collapsible": 1
+            },
+            {
+                "fieldname": "incentive",
+                "fieldtype": "Table",
+                "options": "MK Sales Incentive",
+                "label": "Incentive",
+                "translatable": 1,
+                "insert_after": "incentives_section"
+            },
+            {
+                "fieldname": "incentives_summary_section",
+                "fieldtype": "Section Break",
+                "insert_after": "incentive",
+                "label": "Incentives Summary",
+                "collapsible": 1
+            },
+            {
+                "fieldname": "incentives_total",
+                "fieldtype": "Currency",
+                "label": "Total Incentives",
+                "translatable": 1,
+                "read_only": 1,
+                "insert_after": "incentives_summary_section"
+            },
         ]
     }
 

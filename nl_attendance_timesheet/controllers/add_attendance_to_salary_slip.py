@@ -14,6 +14,8 @@ def add_attendance_data(payroll_entry):
 
     for entry in salary_slips:
         salary_slip = frappe.get_doc('Salary Slip', entry.get('name'))
+        maximum_monthly_hours = salary_slip.total_working_days * 8
+
         salary_slip.attendance = []
         salary_slip.regular_overtime = []
         salary_slip.holiday_overtime = []
@@ -70,7 +72,7 @@ def add_attendance_data(payroll_entry):
                     salary_slip.holiday_hours += overtime_attendance_record.get('total_hours')
         
         if salary_slip.regular_working_hours > maximum_monthly_hours:
-            salary_slip.overtime_hours += salary_slip.regular_working_hours - maximum_monthly_hours
+            # salary_slip.overtime_hours += salary_slip.regular_working_hours - maximum_monthly_hours
             salary_slip.regular_working_hours = maximum_monthly_hours
         elif salary_slip.regular_working_hours < maximum_monthly_hours:
             balance_to_maximum_monthly_hours = maximum_monthly_hours - salary_slip.regular_working_hours
