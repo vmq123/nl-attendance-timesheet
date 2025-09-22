@@ -14,5 +14,5 @@ def execute():
             }
         ]
     }
-
-    create_custom_fields(custom_fields, update=True)
+    # already merged into attendance_custom_fields.py file
+    # create_custom_fields(custom_fields, update=True)

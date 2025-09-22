@@ -27,7 +27,6 @@ def execute():
                 "translatable": 1,
                 "insert_after": "hourly_rate",
             }
-
         ]
     }
 

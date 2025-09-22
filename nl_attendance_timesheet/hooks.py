@@ -28,8 +28,11 @@ required_apps = ["frappe/erpnext"]
 # page_js = {"page" : "public/js/file.js"}
 
 # include js in doctype views
-doctype_js = {
- "Payroll Entry" : "public/js/payroll_entry.js",}
+
+# comment out since already included in payroll entry processing flow
+# doctype_js = {
+#  "Payroll Entry" : "public/js/payroll_entry.js",}
+
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}

@@ -6,12 +6,20 @@ def execute():
     custom_fields = {
         "Attendance": [
             {
+                "fieldname": "payment_hours",
+                "fieldtype": "Float",
+                "label": "Payment Hours",
+                "translatable": 1,
+                "read_only": 1,
+                "insert_after": "working_hours"
+            },
+            {
                 "fieldname": "overtime",
                 "fieldtype": "Float",
                 "translatable": 1,
                 "read_only": 1,
                 "insert_after": "payment_hours",
-            },
+            }
         ]
     }
 

@@ -34,13 +34,6 @@ def execute():
                 "translatable": 1,
                 "depends_on": "eval: doc.include_unpaid_breaks",
                 "insert_after": "unpaid_breaks_minutes"
-            },
-            {
-                "fieldname": "total_shift_hours",
-                "fieldtype": "Float",
-                "label": "Total shift hours",
-                "translatable": 1,
-                "insert_after": "min_hours_to_include_a_break"
             }
         ]
     }
