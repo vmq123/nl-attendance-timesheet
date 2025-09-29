@@ -8,13 +8,13 @@ from pypika import Criterion
 from erpnext.setup.doctype.employee.employee import get_holiday_list_for_employee
 from hrms.utils.holiday_list import get_holiday_dates_between
 
-current_date = nowdate()
+# current_date = nowdate()
 logger = frappe.logger("mk_logger")
 # cache keys
 HOLIDAYS_BETWEEN_DATES = "holidays_between_dates"
 
 @frappe.whitelist()
-def generate_overtime_timesheets(start_date=current_date, end_date=current_date):
+def generate_overtime_timesheets(start_date=None, end_date=None):
     logger.info(f"start_date: {start_date} end_date: {end_date}")
 
     SETTINGS_DOCTYPE = 'Navari Custom Payroll Settings'
