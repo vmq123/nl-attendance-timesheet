@@ -18,7 +18,7 @@ def after_install():
 		click.secho("Thank you for installing NL_Attendance_TS!", fg="green")
 
 	except Exception as e:
-		BUG_REPORT_URL = "https://github.com/vmq123/maika/issues/new"
+		BUG_REPORT_URL = "https://github.com/vmq123/nl_attendance_timesheet/issues/new"
 		click.secho(
 			"Installation for NL_Attendance_TS app failed due to an error."
 			" Please try re-installing the app or"
@@ -36,7 +36,6 @@ def execute_after_install():
 	# add_non_standard_user_types()
 	# set_single_defaults()
 	# create_default_role_profiles()
-	# create_default_module_profiles()
 	# run_post_install_patches()
 
 
@@ -67,7 +66,7 @@ def before_app_uninstall(app_name):
 
 
 def get_custom_fields():
-	"""Maika specific custom fields that need to be added to the masters in ERPNext"""
+	"""NL_Attendance_Timesheet specific custom fields that need to be added to the masters in ERPNext"""
 	return {
         "Attendance": [
             {
@@ -521,18 +520,6 @@ def create_default_role_profiles():
 
 		role_profile.insert(ignore_permissions=True)
 
-def create_default_module_profiles():
-	for module_profile_name, modules in DEFAULT_MODULE_PROFILES.items():
-		if frappe.db.exists("Module Profile", module_profile_name):
-			continue
-
-		module_profile = frappe.new_doc("Module Profile")
-		module_profile.module_profile = module_profile_name
-		for module in modules:
-			module_profile.append("modules", {"module": module})
-
-		module_profile.insert(ignore_permissions=True)
-
 def get_post_install_patches():
 	return (
 		"erpnext.patches.v13_0.move_tax_slabs_from_payroll_period_to_income_tax_slab",
@@ -767,12 +754,6 @@ DEFAULT_ROLE_PROFILES = {
 		"MK HR Manager",
 		"MK HR User",
 		"MK Manager",
-	],
-}
-
-DEFAULT_MODULE_PROFILES = {
-	"MK": [
-		"Maika",
 	],
 }
 
