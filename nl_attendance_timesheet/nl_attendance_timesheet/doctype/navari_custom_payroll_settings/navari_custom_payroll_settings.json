@@ -20,6 +20,7 @@
    "description": "Hours beyond which will be carried over to overtime 1.5",
    "fieldname": "maximum_monthly_hours",
    "fieldtype": "Float",
+   "hidden": 1,
    "label": "Maximum monthly hours"
   },
   {
@@ -62,7 +63,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2024-05-17 09:00:24.479077",
+ "modified": "2025-10-09 13:39:19.646041",
  "modified_by": "Administrator",
  "module": "Nl Attendance Timesheet",
  "name": "Navari Custom Payroll Settings",
@@ -79,6 +80,7 @@
    "write": 1
   }
  ],
+ "row_format": "Dynamic",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": []
