@@ -128,7 +128,13 @@ after_install = "nl_attendance_timesheet.setup.after_install"
 # 		"on_trash": "method"
 # 	}
 # }
-
+doc_events = {
+	"Shift Type": {
+		"before_save": [
+			"nl_attendance_timesheet.hook_doc_events.shift_type.before_save_hook",
+		]
+	},
+}
 # Scheduled Tasks
 # ---------------
 
